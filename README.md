@@ -91,25 +91,33 @@ To use the physics engine, first create a `THREE.Scene` object and pass it to th
 
 ```javascript
 import * as THREE from 'three';
-import { PhysicsWorld, PhysicsBox } from './physics-engine.js';
+import { PhysicsWorld, PhysicsBox } from './PhysicsEngine.js';
 
 const scene = new THREE.Scene();
 const world = new PhysicsWorld(scene);
 
-const box = new PhysicsBox({
-  position: new THREE.Vector3(0, 5, 0),
-  width: 2,
-  height: 2,
-  depth: 2,
-  mass: 5,
-  color: 0xff0000
+const ground = new SmallPhysics.PhysicsPlane({
+    width: 50,
+    height: 50,
+    color: 0x999999,
+    mass: 0,
+    rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
 });
 
-world.add(box);
+const box = new PhysicsBox({
+    position: new THREE.Vector3(0, 5, 0),
+    width: 2,
+    height: 2,
+    depth: 2,
+    mass: 5,
+    color: 0xff0000
+});
+
+world.add(ground).add(box);
 
 function animate() {
-  requestAnimationFrame(animate);
-  world.update();
+    requestAnimationFrame(animate);
+    world.update();
 }
 
 animate();
